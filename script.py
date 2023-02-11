@@ -1,6 +1,3 @@
 import undetected_chromedriver as chr
-chr.install(
-    executable_path = 'ccd/chromedriver.exe'
-    )
-d = chr.Chrome()
+d = chr.Chrome(version_main = 109)
 res = d.get("https://ficbook.net")
