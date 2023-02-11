@@ -1,5 +1,5 @@
 import undetected_chromedriver as chr
-uc.install(
+chr.install(
     executable_path = 'ccd/chromedriver.exe'
     )
 d = chr.Chrome()
