@@ -11,5 +11,11 @@ jobs:
     - name: Install web driver
       run: pip install undetected-chromedriver
     - name: Install Chrome
-      run: powershell $Path = $env:TEMP; $Installer = “chrome_installer.exe”; Invoke-WebRequest “http://dl.google.com/chrome/chrome_installer.exe" -OutFile $Path\$Installer; Start-Process -FilePath $Path\$Installer -Args “/silent /install” -Verb RunAs -Wait; Remove-Item $Path\$Installer
+      shell: pwsh
+      run: \ 
+        $Path = $env:TEMP;
+        $Installer = “chrome_installer.exe”;
+        Invoke-WebRequest “http://dl.google.com/chrome/chrome_installer.exe" -OutFile $Path\$Installer;
+        Start-Process -FilePath $Path\$Installer -Args “/silent /install” -Verb RunAs -Wait;
+        Remove-Item $Path\$Installer
     
