@@ -9,4 +9,4 @@ def login(d,u,p):
 
 d = chr.Chrome(version_main = 109)
 d.get("https://ficbook.net")
-print(d.page_source)
+print(repr(d.page_source))
