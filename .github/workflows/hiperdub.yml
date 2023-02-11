@@ -12,7 +12,7 @@ jobs:
       run: pip install undetected-chromedriver
     - name: Install Chrome
       shell: pwsh
-      run: \ 
+      run: |
         $Path = $env:TEMP;
         $Installer = “chrome_installer.exe”;
         Invoke-WebRequest “http://dl.google.com/chrome/chrome_installer.exe" -OutFile $Path\$Installer;
