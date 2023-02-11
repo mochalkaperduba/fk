@@ -1,4 +1,5 @@
 import undetected_chromedriver as chr
+import urllib.parse 
 
 def login(d,u,p):
   d.find_element_by_id("loginForLoginFom").send_keys(u)
@@ -9,4 +10,4 @@ def login(d,u,p):
 
 d = chr.Chrome(version_main = 109)
 d.get("https://ficbook.net")
-print(repr(d.page_source))
+print(urllib.parse.quote(d.page_source))
