@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Copy
-      uses: action/checkout@v3
+      uses: actions/checkout@v3
     - name: Install web driver
       run: pip install undetected-chromedriver
