@@ -54,7 +54,7 @@ def loadl():
 
 def login(d,u,p):
   logn = loginjs.replace("@log",u).replace("@pass",p)
-  print(logn)
+  print("Logged!")
   d.execute_script(logn)
 
 def injectjs(d):
@@ -75,6 +75,7 @@ for l in range(int(sys.argv[1]), int(sys.argv[2])):
   d.refresh()
   injectjs(d)
   drv.append(d)
+  print("New Chrome Driver Started")
 
   
 while(True):
