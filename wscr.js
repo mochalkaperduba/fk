@@ -1,5 +1,5 @@
-function createlib(name, desc) {
-    fetch("https://ficbook.net/ajax/collections/create", {
+async function createlib(name, desc) {
+    return fetch("https://ficbook.net/ajax/collections/create?rnd"+rnd(0,10000000), {
         "headers": {
             "accept": "*/*",
             "accept-language": "ru-RU,ru;q=0.9",
@@ -20,10 +20,10 @@ function createlib(name, desc) {
         "method": "POST",
         "mode": "cors",
         "credentials": "include"
-    });
+    }).then((response) => 1).then((responseJson) => { return responseJson });;
 }
-function addtolib(fic, lib) {
-    fetch("https://ficbook.net/ajax/collections/addfanfic", {
+async function addtolib(fic, lib) {
+    return fetch("https://ficbook.net/ajax/collections/addfanfic?rnd"+rnd(0,10000000), {
         "headers": {
             "accept": "*/*",
             "accept-language": "ru-RU,ru;q=0.9",
@@ -44,7 +44,7 @@ function addtolib(fic, lib) {
         "method": "POST",
         "mode": "cors",
         "credentials": "include"
-    });
+    }).then((response) => 1).then((responseJson) => { return responseJson });
 }
 function randel(arr) {
     return arr[Math.floor((Math.random() * arr.length))];
@@ -58,7 +58,7 @@ function rnd(min, max) {
     return Math.floor(Math.random() * (max - min) + min);
 }
 async function libsapi() {
-    return fetch("https://ficbook.net/ajax/collections/listforfanfic", {
+    return fetch("https://ficbook.net/ajax/collections/listforfanfic?rnd"+rnd(0,10000000), {
         "headers": {
             "accept": "*/*",
             "accept-language": "ru-RU,ru;q=0.9",
@@ -86,20 +86,20 @@ class Lib {
     name = "";
     id = -1;
     desc = null;
-    constructor(name, desc) {
+    constructor(name, desc, id) {
         this.name = name;
         this.desc = desc;
-        createlib(name, randel(this.desc));
+        this.id = id;
     }
-    addfic(fic) {
-        addtolib(fic, this.id);
+    async addfic(fic) {
+        await addtolib(fic, this.id);
         this.fs = this.fs - 1;
         if (this.fs === 0) {
             this.updatetagret();
         }
     }
     async updatetagret() {
-        createlib(this.name, randel(this.desc));
+        await createlib(this.name, randel(this.desc));
         this.fs = 1000;
         let json = await libsapi();
         for (let i = 0; i < json.data.collections.length - 3; i++) {
@@ -113,27 +113,26 @@ class Lib {
 async function buildlibs(names, desc) {
     let list = [];
     for (let i = 0; i < names.length; i++) {
-        list.push(new Lib(names[i], desc));
+        await createlib(names[i], randel(desc));
     }
     let json = await libsapi();
-    for (let j = 0; j < list.length; j++) {
-        for (let i = 0; i < json.data.collections.length - 3; i++) {
-            if (json.data.collections[i].name === list[j].name) {
-                list[j].id = json.data.collections[i].id;
-                break;
-            }
-        }
+    for (let j = 0; j < names.length; j++) {
+        list.push(new Lib(json.data.collections[j].name, desc, json.data.collections[j].id))
     }
     return list;
 }
 async function control(names, desc) {
     let libs = await buildlibs(names, desc);
-    const addreqdel = 500;
+    const addreqdel = 400;
     let l = 0;
+    let dest = 0;
     while (true) {
-        libs[l % libs.length].addfic(rnd(13152449, 13152429));
+        libs[l % libs.length].addfic(rnd(12449, 13152429));
         l++;
-        if (l % 100 === 0)
-            console.log("One more hungred! Perdub will be mine!")
+        await sleep(addreqdel);
+        if (l % 100 === 0){
+            l++;
+            console.log("One more hungred! Perdub will be mine! "+l*100+" add sended///")
+        }
     }
 }
