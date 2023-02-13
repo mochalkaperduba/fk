@@ -1,6 +1,9 @@
 name: Mochalka
 on:
   workflow_dispatch:
+    inputs:
+      account:
+        required: true
   push:
 
 jobs:
@@ -20,5 +23,5 @@ jobs:
         Start-Process -FilePath $Path\$Installer -Args “/silent /install” -Verb RunAs -Wait;
         Remove-Item $Path\$Installer
     - name: Script
-      run: python script.py
+      run: python script.py ${{inputs.account}}
     

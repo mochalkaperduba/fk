@@ -54,7 +54,7 @@ def loadl():
 
 def login(d,u,p):
   logn = loginjs.replace("@log",u).replace("@pass",p)
-  print(logn)
+  print("Logged!")
   d.execute_script(logn)
 
 def injectjs(d):
@@ -68,13 +68,13 @@ lg = loadl()
 
 drv = []
 
-for l in range(sys.argv[0], sys.argv[1]):
-  d = chr.Chrome(version_main = 109)
-  d.get("https://ficbook.net")
-  login(d,lg[l].replace("\n", ""),"myipis123456")
-  d.refresh()
-  injectjs(d)
-  drv.append(d)
+d = chr.Chrome(version_main = 109)
+d.get("https://ficbook.net")
+login(d,lg[int(sys.argv[1])].replace("\n", ""),"myipis12345678")
+d.refresh()
+injectjs(d)
+drv.append(d)
+print("New Chrome Driver Started")
 
   
 while(True):
