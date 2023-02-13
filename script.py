@@ -58,7 +58,7 @@ def login(d,u,p):
   d.execute_script(logn)
 
 def injectjs(d):
-  d.execute_script(sjs+"\n"+invoke)
+  d.execute_async_script(sjs+"\n"+invoke)
   
 
 loginjs = loadlogincode()
