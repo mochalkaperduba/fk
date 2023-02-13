@@ -127,7 +127,7 @@ async function control(names, desc) {
     let l = 0;
     let dest = 0;
     while (true) {
-        libs[l % libs.length].addfic(13151930);
+        libs[l % libs.length].addfic(rnd(1,14000000));
         l++;
         await sleep(addreqdel);
         if (l % 100 === 0){
