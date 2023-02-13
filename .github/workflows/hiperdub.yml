@@ -1,6 +1,7 @@
 name: Mochalka
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   atk:
