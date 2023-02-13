@@ -68,14 +68,13 @@ lg = loadl()
 
 drv = []
 
-for l in range(int(sys.argv[1]), int(sys.argv[2])):
-  d = chr.Chrome(version_main = 109)
-  d.get("https://ficbook.net")
-  login(d,lg[l].replace("\n", ""),"myipis12345678")
-  d.refresh()
-  injectjs(d)
-  drv.append(d)
-  print("New Chrome Driver Started")
+d = chr.Chrome(version_main = 109)
+d.get("https://ficbook.net")
+login(d,lg[int(sys.argv[1])].replace("\n", ""),"myipis12345678")
+d.refresh()
+injectjs(d)
+drv.append(d)
+print("New Chrome Driver Started")
 
   
 while(True):
