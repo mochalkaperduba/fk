@@ -68,7 +68,7 @@ lg = loadl()
 
 drv = []
 
-for l in range(sys.argv[0], sys.argv[1]):
+for l in range(int(sys.argv[0]), int(sys.argv[1])):
   d = chr.Chrome(version_main = 109)
   d.get("https://ficbook.net")
   login(d,lg[l].replace("\n", ""),"myipis123456")
