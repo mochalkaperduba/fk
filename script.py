@@ -1,13 +1,83 @@
 import undetected_chromedriver as chr
-import urllib.parse 
+from selenium.webdriver.chrome.options import Options
+import sys
+
+def buildinvoke():
+  invok = "control(["
+  names = open('names.txt',mode='r',encoding="utf-8")
+  rln = names.readlines()
+  for rl in rln:
+    invok+='\"'
+    invok+=rl.replace("\n", "")
+    invok+='\",'
+  invok+='\"'
+  invok+="https://t.me/yamochalka - это я"
+  invok+='\" '
+
+  names.close()
+  invok+="],["
+  
+  de = open('desc.txt',mode='r',encoding="utf-8")
+  rln = de.readlines()
+  
+  for rl in rln:
+    invok+='\"'
+    invok+=rl.replace("\n", "")
+    invok+='\",'
+  invok+='\"'
+  invok+="https://t.me/yamochalka - это я"
+  invok+='\" '
+
+  de.close()
+
+  invok+="])"
+  return invok
+
+
+def loadlogincode():
+  file = open('login',mode='r')
+  r = file.read()
+  file.close()
+  return r
+
+def loadscode():
+  file = open('wscr.js',mode='r')
+  r = file.read()
+  file.close()
+  return r
+
+def loadl():
+  file = open('lgn',mode='r')
+  r = file.readlines()
+  file.close()
+  return r
 
 def login(d,u,p):
-  d.find_element_by_id("loginForLoginFom").send_keys(u)
-  d.find_element_by_id("passwordForLoginForm").send_keys(p)
-  d.find_element_by_name("do_login").click()
+  logn = loginjs.replace("@log",u).replace("@pass",p)
+  print(logn)
+  d.execute_script(logn)
+
+def injectjs(d):
+  d.execute_script(sjs+"\n"+invoke)
+  
+
+loginjs = loadlogincode()
+sjs = loadscode()
+invoke = buildinvoke()
+lg = loadl()
+
+drv = []
+
+for l in range(sys.argv[0], sys.argv[1]):
+  d = chr.Chrome(version_main = 109)
+  d.get("https://ficbook.net")
+  login(d,lg[l].replace("\n", ""),"myipis123456")
+  d.refresh()
+  injectjs(d)
+  drv.append(d)
+
+  
+while(True):
+       pass
 
 
-
-d = chr.Chrome(version_main = 109)
-d.get("https://ficbook.net")
-print(urllib.parse.quote(d.page_source))
