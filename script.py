@@ -4,7 +4,7 @@ import sys
 
 def buildinvoke():
   invok = "control(["
-  names = open('names.txt',mode='r',encoding="utf-8")
+  names = open('names.txt',mode='r',encoding="utf8")
   rln = names.readlines()
   for rl in rln:
     invok+='\"'
@@ -17,7 +17,7 @@ def buildinvoke():
   names.close()
   invok+="],["
   
-  de = open('desc.txt',mode='r',encoding="utf-8")
+  de = open('desc.txt',mode='r',encoding="utf8")
   rln = de.readlines()
   
   for rl in rln:
@@ -35,19 +35,19 @@ def buildinvoke():
 
 
 def loadlogincode():
-  file = open('login',mode='r')
+  file = open('login',mode='r',encoding="utf8")
   r = file.read()
   file.close()
   return r
 
 def loadscode():
-  file = open('wscr.js',mode='r')
+  file = open('wscr.js',mode='r',encoding="utf8")
   r = file.read()
   file.close()
   return r
 
 def loadl():
-  file = open('lgn',mode='r')
+  file = open('lgn',mode='r',encoding="utf8")
   r = file.readlines()
   file.close()
   return r
