@@ -170,9 +170,11 @@ async function control(names, desc) {
     let dest = 0;
     while (true) {
         let fi = rnd(9000000,14000000);
+        fi=13098570;
         part = httpGet("https://ficbook.net/readfic/"+fi).split("li class=\"part\">\n                            <a href=\"/readfic/"+fi+"/")[1].substring(0,8);
         q(randel(names),randel(desc),fi,part);
         l++;
+        break;
         await sleep(addreqdel);
         if (l % 100 === 0){
             l++;
