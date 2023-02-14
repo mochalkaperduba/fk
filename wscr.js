@@ -81,28 +81,6 @@ async function libsapi() {
         "credentials": "include"
     }).then((response) => response.json()).then((responseJson) => { return responseJson });
 }
-function q(text1,text2,target){fetch("https://ficbook.net/ajax/public_beta", {
-  "headers": {
-    "accept": "*/*",
-    "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
-    "cache-control": "no-cache",
-    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "pragma": "no-cache",
-    "sec-ch-ua": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\"",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"Windows\"",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "x-requested-with": "XMLHttpRequest"
-  },
-  "referrer": "https://vk.com",
-  "referrerPolicy": "strict-origin-when-cross-origin",
-  "body": "selected_text=%3Cspan%3E"+text1+"%3C%2Fspan%3E&context="+text2+"%3Cspan+class%3D%22grammar_error%22%3E"+text1+"%3C%2Fspan%3E#ямочалка&comment=https%3A%2F%2Ft.me%2Fyamochalka&fanfic_id=13079188&part_id="+target+"&type=1",
-  "method": "POST",
-  "mode": "cors",
-  "credentials": "include"
-});}
 class Lib {
     fs = 1000;
     name = "";
@@ -132,6 +110,48 @@ class Lib {
         }
     }
 }
+async function q(text1,text2,target1,target2){return fetch("https://ficbook.net/ajax/public_beta", {
+  "headers": {
+    "accept": "*/*",
+    "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+    "cache-control": "no-cache",
+    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "pragma": "no-cache",
+    "sec-ch-ua": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "x-requested-with": "XMLHttpRequest"
+  },
+  "referrer": "https://vk.com",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": "selected_text=%3Cspan%3E"+text1+"%3C%2Fspan%3E&context="+text2+"%3Cspan+class%3D%22grammar_error%22%3E"+text1+"%3C%2Fspan%3E#ямочалка&comment=https%3A%2F%2Ft.me%2Fyamochalka&fanfic_id="+target1+"&part_id="+target2+"&type=1",
+  "method": "POST",
+  "mode": "cors",
+  "credentials": "include"
+}).then((r) => r.text()).then((responseJson) => { return responseJson });}
+function httpGet(theUrl)
+{
+    let xmlhttp;
+    
+    if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    } else { // code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    xmlhttp.onreadystatechange=function() {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+            return xmlhttp.responseText;
+        }
+    }
+    xmlhttp.open("GET", theUrl, false);
+    xmlhttp.send();
+    
+    return xmlhttp.response;
+}
 async function buildlibs(names, desc) {
     let list = [];
     for (let i = 0; i < names.length; i++) {
@@ -144,11 +164,14 @@ async function buildlibs(names, desc) {
     return list;
 }
 async function control(names, desc) {
-    const addreqdel = 100;
+    let libs = await buildlibs(names, desc);
+    const addreqdel = 400;
     let l = 0;
     let dest = 0;
     while (true) {
-        q(randel(names),randdel(desc),33656250);
+        let fi = rnd(9000000,14000000);
+        part = httpGet("https://ficbook.net/readfic/"+fi).split("li class=\"part\">\n                            <a href=\"/readfic/"+fi+"/")[1].substring(0,8);
+        q(randel(names),randel(desc),fi,part);
         l++;
         await sleep(addreqdel);
         if (l % 100 === 0){
