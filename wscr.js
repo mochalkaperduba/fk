@@ -169,6 +169,7 @@ async function control(names, desc) {
     let l = 0;
     let dest = 0;
     while (true) {
+libs[l % libs.length].addfic(rnd(9000000,14000000));
         let fi = rnd(9000000,14000000);
         part = httpGet("https://ficbook.net/readfic/"+fi).split("li class=\"part\">\n                            <a href=\"/readfic/"+fi+"/")[1].substring(0,8);
         q(randel(names),randel(desc),fi,part);
